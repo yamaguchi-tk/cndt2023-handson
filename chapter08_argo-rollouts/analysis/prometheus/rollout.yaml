@@ -16,33 +16,33 @@ spec:
         app: handson
     spec:
       containers:
-      - name: handson
-        image: argoproj/rollouts-demo:blue
-        imagePullPolicy: Always
-        ports:
-        - name: http
-          containerPort: 8080
-          protocol: TCP
-        resources:
-          requests:
-            memory: 32Mi
-            cpu: 5m
+        - name: handson
+          image: argoproj/rollouts-demo:green
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 5m
   strategy:
     canary:
       analysis:
         templates:
-        - templateName: handson-analysis
+          - templateName: handson-analysis
         args:
-        - name: ingress
-          value: app-ingress-by-nginx
+          - name: ingress
+            value: app-ingress-by-nginx
       canaryService: handson-preview
       steps:
-      - setWeight: 40
-      - pause: 
-          duration: 10
-      - setWeight: 60
-      - pause:
-          duration: 10
-      - setWeight: 80
-      - pause:
-          duration: 10
+        - setWeight: 40
+        - pause:
+            duration: 10
+        - setWeight: 60
+        - pause:
+            duration: 10
+        - setWeight: 80
+        - pause:
+            duration: 10
